@@ -1,0 +1,49 @@
+@import './assets/css/font-awesome.css';
+$itemSize: 1000/70+px;
+body {
+  background: #222;
+}
+#root{
+  margin: 0 auto; 
+  background: #222;
+  text-align: center;
+  height: 100vh;
+}
+.mainDiv{
+  display:flex;
+  flex-flow: row wrap;
+  margin: 0 auto;
+}
+.death{
+  background: black;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  border-right: 1px solid rgba(255,255,255,0.2);
+}
+
+.alive{
+  @extend .death;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.2);
+}
+.born {
+  @extend .death;
+  background: rgba(255,0,0, 0.3);
+}
+.padding{
+  padding-top: 8px;
+  .btn {
+    margin-left: 5px;
+    border: 1px solid gray;
+  }
+}
+
+.dark{
+  background-color: black;
+  color: white;
+}
+
+#gameControls {
+  .btn {
+    margin-left: 10px;
+  }
+}
