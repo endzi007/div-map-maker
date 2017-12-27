@@ -8,9 +8,9 @@ export let clickedObject = (x, y) => {
     });
 }
 
-export let startGame = () => {
+export let makeMapArray = () => {
     Dispatcher.dispatch({
-        type: "START_GAME"
+        type: "MAKE_MAP_ARRAY"
     });
 }
 

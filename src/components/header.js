@@ -3,22 +3,6 @@ import { Navbar, FormGroup, FormControl, Button, Nav, NavItem } from 'react-boot
 import * as actions from '../js/actions';
 import Generation from './generationComponent';
 class Header extends Component { 
-    handleClick(e){
-        let id = e.target.id;
-        switch (id) {
-            case "startGame":
-                actions.startGame();
-            break;
-            case "stopGame":
-                actions.stopGame();
-            break;
-            case "clearBoard":
-                actions.clearBoard();
-            break;
-            default:
-                break;
-        }
-    }
     render(){
         return(
         <Navbar inverse>

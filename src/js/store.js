@@ -58,15 +58,6 @@ class GameStoreCon extends EventEmitter{
            this.state.board.push(temp);
         }
     }
-   
-    startGame(){
-        this.state.on = true;
-        this.playGame();
-    }
-
-    stopGame(){
-        this.state.on = false;
-    }
 
     clearBoard(){
         _.map(_.flattenDeep(this.state.board),function(element){
@@ -106,16 +97,26 @@ class GameStoreCon extends EventEmitter{
         this.emit("change");
     }
 
+    makeMapArray(){
+        let temp = document.getElementsByClassName("mainDiv")[0];
+        let children = temp.childNodes;
+        let arr = [...children];
+        console.log(arr[0].class);
+        for (let i = 0; i < arr.length; i++) {
+            const element = arr[i];
+            console.log(element.class);
+        }
+        //continue here
+        //loop trough all divs and find all that have alive class and puts them on new array state
+
+    }
     addListener(action){
         switch (action.type) {
             case "OBJECT_CLICK":
             this.objectClick(action.x, action.y);
                 break;
-            case "START_GAME":
-            this.startGame();
-                break;
-            case "STOP_GAME":
-            this.stopGame();
+            case "MAKE_MAP_ARRAY":
+            this.makeMapArray();
                 break;
             case "CLEAR_BOARD":
             this.clearBoard();
