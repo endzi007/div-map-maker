@@ -4,7 +4,9 @@ import GameStore from '../js/store';
 class GridItem extends Component{   
     constructor(){
         super();
-        this.isDown = false;
+        this.state = {
+            class: ""
+        }
     }
 
     handleMove(e){
@@ -12,6 +14,9 @@ class GridItem extends Component{
             let x = this.props.x;
             let y = this.props.y;
             //actions.clickedObject(x, y);
+            this.setState({
+                class: "alive"
+            });
             e.target.className="alive";
         }
     }

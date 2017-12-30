@@ -12,11 +12,9 @@ class GameStoreCon extends EventEmitter{
                 height: 50
             },
             board:[],
-            oldBoard: [],
             on: true,
-            generation: 0,
-            itemsToRender: [],
-            mousedown: false
+            mousedown: false,
+            widthInPx: 1100
         }
         this.addListener = this.addListener.bind(this);
     }
@@ -104,7 +102,7 @@ class GameStoreCon extends EventEmitter{
         console.log(arr[0].class);
         for (let i = 0; i < arr.length; i++) {
             const element = arr[i];
-            console.log(element.class);
+            console.log(typeof element.attributes[0].class);
         }
         //continue here
         //loop trough all divs and find all that have alive class and puts them on new array state

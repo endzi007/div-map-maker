@@ -1,5 +1,4 @@
 @import './assets/css/font-awesome.css';
-$itemSize: 1000/70+px;
 body {
   background: #222;
 }
@@ -7,7 +6,7 @@ body {
   margin: 0 auto; 
   background: #222;
   text-align: center;
-  height: 100vh;
+  height: 100%;
 }
 .mainDiv{
   display:flex;

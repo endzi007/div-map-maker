@@ -33,15 +33,13 @@ class GridComponent extends Component {
 
     }
     render(){
-        let width;
-        if(GameStore.state.boardDim.width === 70){
-            width = 1000/70;
-        } else if(GameStore.state.boardDim.width === 50){
-            width= 800/50;
-        } else if(GameStore.state.boardDim.width === 100){
-            width = 1000/100;
-        }
+        let width = GameStore.state.widthInPx/GameStore.state.boardDim.width;
         var temp = [];
+        for (let i = 0; i < this.state.board.length; i++) {
+            const element = this.state.board[i];
+
+            
+        }
         _.map(_.flattenDeep(this.state.board), function(element, i){
             temp.push(<GridItem width = {width} key={"div_"+i} id={"div"+element.x+"_"+element.y} x ={element.x} y={element.y} class= {element.life}/>)
         });

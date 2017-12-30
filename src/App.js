@@ -29,7 +29,7 @@ class App extends Component {
     })
   }
   render() {
-    let width = GameStore.state.boardDim.width === 70 ? 1000 : 800;
+    let width = GameStore.state.widthInPx;
     return (
       <div onMouseDown ={this.handleDown} onMouseUp ={this.handleUp}>
         <Header />
