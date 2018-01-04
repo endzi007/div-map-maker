@@ -14,17 +14,32 @@ export let makeMapArray = () => {
     });
 }
 
+
+export let loadArray = () => {
+    Dispatcher.dispatch({
+        type: "LOAD_ARRAY"
+    });
+}
+
 export let stopGame = () => {
     Dispatcher.dispatch({
         type: "STOP_GAME"
     });
 }
 
-export let clearBoard = (text) => {
+export let clearBoard = () => {
     Dispatcher.dispatch({
         type: "CLEAR_BOARD"
     });
 }
+
+export let changeMaterial = (text) => {
+    Dispatcher.dispatch({
+        type: "CHANGE_MATERIAL",
+        text: text
+    });
+}
+
 
 export let changeBoardSize = (id) => {
     Dispatcher.dispatch({

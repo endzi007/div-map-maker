@@ -14,28 +14,51 @@ class GameStoreCon extends EventEmitter{
             board:[],
             on: true,
             mousedown: false,
-            widthInPx: 1100
+            widthInPx: 1100,
+            currentClass: "wall"
         }
         this.addListener = this.addListener.bind(this);
     }
 
-    objectClick(x, y){
+    changeItemClass(x, y, nameOfClass){
         let newState = {...this.state.board};
         _.flatMap(this.state.board, (element) => {
             var index = _.findIndex(element, {x, y});
             if(index !== -1){
-                element.splice(index, 1, {life: "alive", x, y});
+                element.splice(index, 1, {life: nameOfClass, x, y});
             }
         });
         GameStore.emit("change");
     }
 
+    makeMapArray(){
+        let temp = document.getElementsByClassName("mainDiv")[0];
+        let children = temp.childNodes;
+        let arr = [...children];
+        let x = 0;
+        let y = 0;
+        for (let i = 0; i < arr.length; i++) {
+            if(x === this.state.boardDim.width){
+                x = 0;
+                y++;
+            }
+            const element = arr[i];
+            let elementClass = element.attributes.class.nodeValue;
+            if(elementClass !== "death"){
+                this.changeItemClass(x, y, elementClass);
+            }
+            x++;
+        }
+        localStorage.setItem("temp", JSON.stringify(this.state.board));
+    }
     returnBoardState(){
         if(this.state.board.length === 0){
             this.setupGame();
         }
         return this.state.board;
     }
+    
+
 
     setupGame(){
         this.state.board = [];
@@ -94,24 +117,22 @@ class GameStoreCon extends EventEmitter{
         this.state.mousedown = true;
         this.emit("change");
     }
-
-    makeMapArray(){
-        let temp = document.getElementsByClassName("mainDiv")[0];
-        let children = temp.childNodes;
-        let arr = [...children];
-        console.log(arr[0].class);
-        for (let i = 0; i < arr.length; i++) {
-            const element = arr[i];
-            console.log(typeof element.attributes[0].class);
-        }
-        //continue here
-        //loop trough all divs and find all that have alive class and puts them on new array state
-
+    loadArray(){
+        let level = JSON.parse(localStorage.getItem("temp"));
+        this.state.board = level;
+        //this.returnBoardState();
+        this.emit("change");
     }
+
+    changeMaterial(text){
+        this.state.currentClass = text;
+        this.emit("change");
+    }
+
     addListener(action){
         switch (action.type) {
             case "OBJECT_CLICK":
-            this.objectClick(action.x, action.y);
+            this.changeItemClass(action.x, action.y);
                 break;
             case "MAKE_MAP_ARRAY":
             this.makeMapArray();
@@ -122,14 +143,17 @@ class GameStoreCon extends EventEmitter{
             case "CHANGE_BOARD_SIZE":
             this.changeBoardSize(action.id);
             break;
-            case "MAKE_STEP": 
-            this.makeStep();
+            case "LOAD_ARRAY": 
+            this.loadArray();
             break;
             case "MOUSE_DOWN": 
             this.mousedown();
             break;
             case "MOUSE_UP": 
             this.mouseup();
+            break;
+            case "CHANGE_MATERIAL":
+            this.changeMaterial(action.text);
             break;
             default:
                 break;

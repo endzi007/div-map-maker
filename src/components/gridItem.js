@@ -13,17 +13,13 @@ class GridItem extends Component{
         if(GameStore.state.mousedown){
             let x = this.props.x;
             let y = this.props.y;
-            //actions.clickedObject(x, y);
-            this.setState({
-                class: "alive"
-            });
-            e.target.className="alive";
+            e.target.className=GameStore.state.currentClass;
         }
     }
     render(){
         return (
             <div className = {this.props.class} 
-            onMouseEnter ={this.handleMove.bind(this)}  
+            onMouseOver ={this.handleMove.bind(this)}  
             style={{width: this.props.width, height: this.props.width}}>
             </div>
         );

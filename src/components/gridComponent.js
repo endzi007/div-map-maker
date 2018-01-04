@@ -15,7 +15,6 @@ class GridComponent extends Component {
         });
     }
     componentDidMount(){
-        console.log(this.state.board);
         GameStore.on("change", () => {
             this.setState({
                 board: GameStore.returnBoardState()

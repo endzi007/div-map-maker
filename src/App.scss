@@ -45,4 +45,58 @@ body {
   .btn {
     margin-left: 10px;
   }
+  li {
+    text-decoration: none;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+}
+.controles{
+  width: 35px;
+  height: 35px;
+  background-size: cover;
+}
+#wall {
+  @extend .controles;
+  background-image: url(./assets/images/wall.jpg);
+}
+#brick {
+  @extend .controles;
+  background-image: url(./assets/images/brick.jpg);
+}
+#wood {
+  @extend .controles;
+  background-image: url(./assets/images/wood.jpg);
+}
+#water {
+  @extend .controles;
+  background-image: url(./assets/images/water.jpg);
+}
+.wall {
+  @extend .death;
+  background-image: url(./assets/images/wall.jpg);
+  background-size: cover;
+}
+
+.brick {
+  @extend .death;
+  background-image: url(./assets/images/brick.jpg);
+  background-size: cover;
+}
+
+.water {
+  @extend .death;
+  background-image: url(./assets/images/water.jpg);
+  background-size: cover;
+}
+
+.wood {
+  @extend .death;
+  background-image: url(./assets/images/wood.jpg);
+  background-size: cover;
+}
+
+.matActive{
+  border: 1px solid red;
 }
