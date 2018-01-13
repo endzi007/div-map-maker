@@ -40,7 +40,7 @@ class GridComponent extends Component {
             
         }
         _.map(_.flattenDeep(this.state.board), function(element, i){
-            temp.push(<GridItem width = {width} key={"div_"+i} id={"div"+element.x+"_"+element.y} x ={element.x} y={element.y} class= {element.life}/>)
+            temp.push(<GridItem width = {width} key={"div_"+i} id={"div"+element.x+"_"+element.y} x ={element.x} y={element.y} class= {"cell " + element.life}/>)
         });
                 
         return(

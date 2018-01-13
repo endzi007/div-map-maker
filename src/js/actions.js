@@ -15,9 +15,9 @@ export let makeMapArray = () => {
 }
 
 
-export let loadArray = () => {
+export let showLoadModal = () => {
     Dispatcher.dispatch({
-        type: "LOAD_ARRAY"
+        type: "SHOW_LOAD_MODAL"
     });
 }
 
@@ -57,5 +57,56 @@ export let mousedown = () => {
 export let mouseup = () => {
     Dispatcher.dispatch({
         type: "MOUSE_UP"
+    });
+}
+
+
+export let closeModal = () => {
+    Dispatcher.dispatch({
+        type: "CLOSE_MODAL"
+    });
+}
+
+
+
+export let openModal = () => {
+    Dispatcher.dispatch({
+        type: "OPEN_MODAL"
+    });
+}
+
+export let copyToClipboard = () => {
+    Dispatcher.dispatch({
+        type: "COPY_TO_CLIPBOARD"
+    });
+}
+
+
+export let saveToLocalStorage = (level) => {
+    Dispatcher.dispatch({
+        type: "SAVE_TO_LOCAL_STORAGE",
+        level: level
+    });
+}
+
+
+export let closeLoadModal = () => {
+    Dispatcher.dispatch({
+        type: "CLOSE_LOAD_MODAL"
+    });
+}
+
+export let loadArray = (id) => {
+    Dispatcher.dispatch({
+        type: "LOAD_ARRAY",
+        id: id
+    });
+}
+
+
+export let openCloseResizeModal = (show) => {
+    Dispatcher.dispatch({
+        type: "OPEN_CLOSE_RESIZE_MODAL",
+        show: show
     });
 }

@@ -7,6 +7,10 @@ import GameStore from './js/store';
 import GameControls from './components/gameControls';
 import Generation from './components/generationComponent';
 import * as actions from './js/actions';
+import ArrayModal from './components/arrayModal';
+import LoadArrayModal from './components/loadArrayModal';
+import GridSizeModal from './components/gridSizeModal';
+
 class App extends Component {
 
   constructor(){
@@ -16,11 +20,9 @@ class App extends Component {
     }
   }
   handleDown(e){
-    e.preventDefault();
     actions.mousedown();
   }
   handleUp(e){
-      e.preventDefault();
       actions.mouseup();
   }
   componentDidMount(){
@@ -36,8 +38,10 @@ class App extends Component {
         <GameControls />
         <div className="mainDiv" style ={{width: width+"px"}}>
          <GridComponent />
+         <ArrayModal/>
+         <LoadArrayModal/>
+         <GridSizeModal />
       </div>
-      <Generation />
       </div>
 
     );

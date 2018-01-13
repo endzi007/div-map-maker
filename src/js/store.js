@@ -2,20 +2,26 @@ import Dispatcher from './dispatcher';
 import { EventEmitter } from 'events';
 import _ from 'lodash';
 import gridItem from '../components/gridItem';
+import $ from 'jquery';
 
 class GameStoreCon extends EventEmitter{
     constructor(){
         super();
         this.state = {
             boardDim: {
-                width: 70,
-                height: 50
+                width: 100,
+                height: 70
             },
             board:[],
             on: true,
             mousedown: false,
-            widthInPx: 1100,
-            currentClass: "wall"
+            widthInPx: 1000,
+            currentClass: "wall",
+            showModal: false,
+            boardString: "",
+            localKeys: [],
+            showLoadModal: false,
+            showResizeModal: false
         }
         this.addListener = this.addListener.bind(this);
     }
@@ -37,19 +43,24 @@ class GameStoreCon extends EventEmitter{
         let arr = [...children];
         let x = 0;
         let y = 0;
-        for (let i = 0; i < arr.length; i++) {
+        for (let i = 0; i < arr.length-1; i++) {
             if(x === this.state.boardDim.width){
                 x = 0;
                 y++;
             }
             const element = arr[i];
             let elementClass = element.attributes.class.nodeValue;
-            if(elementClass !== "death"){
+            if(elementClass.indexOf("death") === -1){
                 this.changeItemClass(x, y, elementClass);
             }
             x++;
         }
-        localStorage.setItem("temp", JSON.stringify(this.state.board));
+        this.state.boardString = JSON.stringify(this.state.board); 
+
+    }
+    saveToLocalStorage(level){
+        localStorage.setItem(level, this.state.boardString);
+        this.emit("change");
     }
     returnBoardState(){
         if(this.state.board.length === 0){
@@ -57,8 +68,6 @@ class GameStoreCon extends EventEmitter{
         }
         return this.state.board;
     }
-    
-
 
     setupGame(){
         this.state.board = [];
@@ -73,7 +82,7 @@ class GameStoreCon extends EventEmitter{
                 }
                 obj.x = x;
                 obj.y = i;
-                obj.life = "death";
+                obj.life = "cell death";
                 temp.push(obj);
            }
            this.state.board.push(temp);
@@ -84,12 +93,14 @@ class GameStoreCon extends EventEmitter{
         _.map(_.flattenDeep(this.state.board),function(element){
             element.life = "death";
         });
-        this.state.generation = 0;
+        let rootEl = document.getElementsByClassName("cell");
+        _.flatMap(rootEl, (element) => {
+            element.className = "cell death";
+        });
         this.emit("change");
     }
 
     changeBoardSize(id){
-        console.log(id);
         if(id === "70x50"){
             this.state.boardDim.width = 70;
             this.state.boardDim.height = 50;
@@ -103,24 +114,34 @@ class GameStoreCon extends EventEmitter{
         this.setupGame();
         this.emit("changed width");
     } 
-    makeStep(){
-        this.state.on = false;
-        this.playGame();
-    }
 
     mouseup(){
         this.state.mousedown = false;
         this.emit("change");
     }
-
     mousedown(){
         this.state.mousedown = true;
         this.emit("change");
     }
-    loadArray(){
-        let level = JSON.parse(localStorage.getItem("temp"));
-        this.state.board = level;
-        //this.returnBoardState();
+    showLoadModal(){
+        let localKeys = [];
+        for (const key in localStorage) {
+            if (localStorage.hasOwnProperty(key)) {
+                localKeys.push(key);
+            }
+        }
+        this.state.localKeys = localKeys;
+        this.state.showLoadModal = true;
+        this.emit("change");
+    }
+    loadArray(id){
+        let storageItem = JSON.parse(localStorage.getItem(id));
+        this.state.board = storageItem;
+        this.emit("change");
+    }
+
+    closeLoadModal(){
+        this.state.showLoadModal = false;
         this.emit("change");
     }
 
@@ -129,32 +150,64 @@ class GameStoreCon extends EventEmitter{
         this.emit("change");
     }
 
+    closeModal(){
+        this.state.showModal = false;
+        this.emit("change");
+    }
+    openModal(){
+        this.state.showModal = true;
+        this.makeMapArray();
+        this.emit("change");
+    }
+
+    openCloseResizeModal(show){
+        this.state.showResizeModal = show;
+        this.emit("change");
+    }
     addListener(action){
         switch (action.type) {
             case "OBJECT_CLICK":
-            this.changeItemClass(action.x, action.y);
+                this.changeItemClass(action.x, action.y);
                 break;
             case "MAKE_MAP_ARRAY":
-            this.makeMapArray();
+                this.makeMapArray();
                 break;
             case "CLEAR_BOARD":
-            this.clearBoard();
+                this.clearBoard();
                 break;
             case "CHANGE_BOARD_SIZE":
-            this.changeBoardSize(action.id);
-            break;
-            case "LOAD_ARRAY": 
-            this.loadArray();
-            break;
+                this.changeBoardSize(action.id);
+                break;
+            case "SHOW_LOAD_MODAL": 
+                this.showLoadModal();
+                break;
             case "MOUSE_DOWN": 
-            this.mousedown();
-            break;
+                this.mousedown();
+                break;
             case "MOUSE_UP": 
-            this.mouseup();
-            break;
+                this.mouseup();
+                break;
             case "CHANGE_MATERIAL":
-            this.changeMaterial(action.text);
-            break;
+                this.changeMaterial(action.text);
+                break;
+            case "CLOSE_MODAL":
+                this.closeModal();
+                break;
+            case "OPEN_MODAL":
+                this.openModal();
+                break;
+            case "CLOSE_LOAD_MODAL": 
+                this.closeLoadModal();
+                break;
+            case "SAVE_TO_LOCAL_STORAGE":
+                this.saveToLocalStorage(action.level);
+                break;
+            case "LOAD_ARRAY":
+                this.loadArray(action.id);
+                break;
+            case "OPEN_CLOSE_RESIZE_MODAL":
+                this.openCloseResizeModal(action.show);
+                break;
             default:
                 break;
         }

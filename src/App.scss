@@ -40,7 +40,19 @@ body {
   background-color: black;
   color: white;
 }
-
+.storageItem{
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid rgba(0,0,0,0.15);
+  padding: 7px;
+  background-color: rgba(0,0,0,0.05);
+  margin-bottom: 3px;
+  &:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.1);
+  }
+}
 #gameControls {
   .btn {
     margin-left: 10px;
