@@ -122,20 +122,6 @@ class GridSizeModal extends Component{
                     <HelpBlock>{this.state.validationSize}</HelpBlock>
                 </FormGroup>
 
-                <FormGroup>
-                    <ControlLabel>Rows</ControlLabel>
-                    <FormControl
-                    id="numOfRows"
-                    type="text"
-                    label="Rows"
-                    placeholder="Enter number of rows"
-                    value={this.state.numOfRows}
-                    onChange={this.handleChange.bind(this)}
-                    autoComplete="off"
-                />
-                <HelpBlock>{this.state.validationRows}</HelpBlock>
-                </FormGroup>
-
 
                 <FormGroup>
                     <ControlLabel>Cols</ControlLabel>
@@ -150,7 +136,20 @@ class GridSizeModal extends Component{
                 />
                 <HelpBlock>{this.state.validationCols}</HelpBlock>
                 </FormGroup>
-              
+
+                <FormGroup>
+                    <ControlLabel>Rows</ControlLabel>
+                    <FormControl
+                    id="numOfRows"
+                    type="text"
+                    label="Rows"
+                    placeholder="Enter number of rows"
+                    value={this.state.numOfRows}
+                    onChange={this.handleChange.bind(this)}
+                    autoComplete="off"
+                />
+                <HelpBlock>{this.state.validationRows}</HelpBlock>
+                </FormGroup>
 
             </form>
             </Modal.Body>

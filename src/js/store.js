@@ -74,7 +74,6 @@ class GameStoreCon extends EventEmitter{
         for (let i = 0; i < this.state.boardDim.height; i++) {
             let temp = [];
             for (let x = 0; x < this.state.boardDim.width; x++) {
-                let aliveItem = Math.round(Math.random()*this.state.boardDim.width);
                 let obj = {
                     life: "",
                     x: "",
@@ -164,6 +163,21 @@ class GameStoreCon extends EventEmitter{
         this.state.showResizeModal = show;
         this.emit("change");
     }
+
+    resizeBoard(size, cols, rows){
+        this.state.widthInPx = size;
+        this.state.boardDim.width = cols;
+        this.state.boardDim.height = rows;
+        this.setupGame();
+        this.emit("change");
+    }
+    deleteItem(id){
+        let temp = _.remove(this.state.localKeys, (n) => {
+            return n === id;
+        });
+        localStorage.removeItem(id);
+        this.emit("change");
+    }
     addListener(action){
         switch (action.type) {
             case "OBJECT_CLICK":
@@ -208,6 +222,11 @@ class GameStoreCon extends EventEmitter{
             case "OPEN_CLOSE_RESIZE_MODAL":
                 this.openCloseResizeModal(action.show);
                 break;
+            case "RESIZE_BOARD": 
+                this.resizeBoard(action.size, action.cols, action.rows);
+                break;
+            case "DELETE_ITEM":
+                this.deleteItem(action.id);
             default:
                 break;
         }

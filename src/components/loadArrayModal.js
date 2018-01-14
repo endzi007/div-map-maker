@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Button, Form, FormGroup, FormControl } from 'react-bootstrap';
 import * as actions from '../js/actions';
 import GameStore from '../js/store';
+import DeleteItemSpan from './deleteItemSpan';
 import _ from 'lodash';
 
 
@@ -10,7 +11,7 @@ class StorageItem extends Component{
         actions.loadArray(e.target.id);
     }
     render(){
-        return(<li className={this.props.classN}onClick={this.handleClick.bind(this)} id={this.props.id}>{this.props.value}</li>);
+        return(<li className={this.props.classN} onClick={this.handleClick.bind(this)} id={this.props.id}>{this.props.value}<DeleteItemSpan idRef={this.props.id} />{this.props.children}</li>);
     }
 }
 class LoadArrayModal extends Component{
@@ -57,7 +58,7 @@ class LoadArrayModal extends Component{
         let listItems = [];
             _.map(array, (element, i)=>{
                 listItems.push(
-                <StorageItem classN="storageItem" value ={element} id={element} key={element+i} />
+                <StorageItem classN="storageItem" value ={element} id={element} key={element+i}></StorageItem>
             )});
         return(
             <Modal show={this.state.showModal} onHide={this.close.bind(this)}>

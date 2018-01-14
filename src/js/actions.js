@@ -110,3 +110,19 @@ export let openCloseResizeModal = (show) => {
         show: show
     });
 }
+
+export let resizeBoard = (size, cols, rows) => {
+    Dispatcher.dispatch({
+        type: "RESIZE_BOARD",
+        size: size,
+        cols: cols,
+        rows: rows
+    });
+}
+
+export let deleteItem = (id) => {
+    Dispatcher.dispatch({
+        type: "DELETE_ITEM",
+        id: id
+    });
+}

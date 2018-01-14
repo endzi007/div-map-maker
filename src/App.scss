@@ -1,6 +1,7 @@
 @import './assets/css/font-awesome.css';
 body {
-  background: #222;
+  background: #222!important;
+  min-height: 100vh!important;
 }
 #root{
   margin: 0 auto; 
@@ -111,4 +112,13 @@ body {
 
 .matActive{
   border: 1px solid red;
+}
+
+
+.delateItemSpan{
+  color: #d9534f;
+  vertical-align: middle;
+  &:hover{
+    color: red;
+  }
 }
