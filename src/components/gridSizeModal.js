@@ -12,47 +12,73 @@ class GridSizeModal extends Component{
             boardSizePx: "",
             numOfRows: "",
             numOfCols: "",
-            validation: ""
+            validation: "",
+            validationSize: "",
+            validationRows: "",
+            validationCols: ""
         }
     }
     validationState(id){
         let element = document.getElementById(id);
         let elementVal = element.value;
-        let regEx = new RegExp(/[0-9]/g);
+        let regEx = new RegExp(/^[0-9]+$/g);
+        console.log("test for 1ddd", regEx.test("1ddd"));
         let length = id==="boardSizePx" ? 4 : 3;
-        if(regEx.test(elementVal)){
+        let obj = {
+            val: false,
+            msg: ""
+        }
+        if(regEx.test(elementVal) || elementVal === ""){
             if(elementVal.length<=length){
-                return true;
+                obj.val = true;
+                obj.msg = "";
             } else {
-                this.setState({validation: "you exceded maximum number for this value"});
+                obj.val = false;
+                obj.msg =  "you exceded maximum number for this value";
             }
         } else {
-            this.setState({validation: "you must enter only numbers"});
-            return false;
+            obj.val = false; 
+            obj.msg = "you must enter only numbers";
         }
+        return obj; 
         
     }
 
     handleChange(e){
         let id = e.target.id;
         let validation = this.validationState(id);
-        if(validation){
+        if(validation.val){
             if(id==="boardSizePx"){
                 this.setState({
-                    boardSizePx: e.target.value
+                    boardSizePx: e.target.value,
+                    validationSize: ""
                });
             } else if(id==="numOfRows"){
                 this.setState({
-                    numOfRows: e.target.value
+                    numOfRows: e.target.value,
+                    validationRows: ""
                });
             } else if(id === "numOfCols"){
                 this.setState({
-                    numOfCols: e.target.value
+                    numOfCols: e.target.value,
+                    validationCols: ""
                });
             }
 
         } else {
-            console.log("some error", this.state[id]);
+            if(id==="boardSizePx"){
+                this.setState({
+                    validationSize: validation.msg
+               });
+            } else if(id==="numOfRows"){
+                this.setState({
+                    validationRows: validation.msg
+               });
+            } else if(id === "numOfCols"){
+                this.setState({
+                    validationCols: validation.msg
+               });
+            }
         }
 
     }
@@ -70,7 +96,10 @@ class GridSizeModal extends Component{
     }
 
     handleClick(e){
-        
+        if(this.state.boardSizePx === "" || this.state.numOfCols === "" || this.state.numOfRows === ""){
+            return; 
+        }
+        actions.resizeBoard(this.state.boardSizePx, this.state.numOfCols, this.state.numOfRows);
     }
 
     render(){
@@ -88,12 +117,13 @@ class GridSizeModal extends Component{
                         placeholder="Enter board size in pixels"
                         value={this.state.boardSizePx}
                         onChange={this.handleChange.bind(this)}
+                        autoComplete="off"
                     />
-                    <HelpBlock>{this.state.validation}</HelpBlock>
+                    <HelpBlock>{this.state.validationSize}</HelpBlock>
                 </FormGroup>
 
                 <FormGroup>
-                    <ControlLabel>Size</ControlLabel>
+                    <ControlLabel>Rows</ControlLabel>
                     <FormControl
                     id="numOfRows"
                     type="text"
@@ -101,12 +131,14 @@ class GridSizeModal extends Component{
                     placeholder="Enter number of rows"
                     value={this.state.numOfRows}
                     onChange={this.handleChange.bind(this)}
+                    autoComplete="off"
                 />
+                <HelpBlock>{this.state.validationRows}</HelpBlock>
                 </FormGroup>
 
 
                 <FormGroup>
-                    <ControlLabel>Size</ControlLabel>
+                    <ControlLabel>Cols</ControlLabel>
                     <FormControl
                     id="numOfCols"
                     type="text"
@@ -114,7 +146,9 @@ class GridSizeModal extends Component{
                     placeholder="Enter number of cols"
                     value={this.state.numOfCols}
                     onChange={this.handleChange.bind(this)}
+                    autoComplete="off"
                 />
+                <HelpBlock>{this.state.validationCols}</HelpBlock>
                 </FormGroup>
               
 
