@@ -26,7 +26,7 @@ class App extends Component {
       actions.mouseup();
   }
   componentDidMount(){
-    GameStore.on("changed width", ()=>{
+    GameStore.on("change", ()=>{
      this.setState({width: GameStore.state.boardDim.width});
     })
   }

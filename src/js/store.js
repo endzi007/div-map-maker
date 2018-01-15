@@ -111,7 +111,7 @@ class GameStoreCon extends EventEmitter{
             this.state.boardDim.height = 70;
         }
         this.setupGame();
-        this.emit("changed width");
+        this.emit("changed");
     } 
 
     mouseup(){
@@ -136,6 +136,13 @@ class GameStoreCon extends EventEmitter{
     loadArray(id){
         let storageItem = JSON.parse(localStorage.getItem(id));
         this.state.board = storageItem;
+        let boardWidth = storageItem.length;
+        let counter = 0; 
+        _.flatMap(storageItem, (e)=>{
+            console.log(e);
+        });
+        let boardHeight = counter/boardWidth;
+        console.log("board height", boardHeight, "boardWidth", boardWidth);
         this.emit("change");
     }
 
