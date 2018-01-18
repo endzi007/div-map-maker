@@ -86,6 +86,11 @@ body {
   @extend .controles;
   background-image: url(./assets/images/water.jpg);
 }
+
+#delete{
+  @extend .controles;
+  background: gray;
+}
 .wall {
   @extend .death;
   background-image: url(./assets/images/wall.jpg);
@@ -109,6 +114,7 @@ body {
   background-image: url(./assets/images/wood.jpg);
   background-size: cover;
 }
+
 
 .matActive{
   border: 1px solid red;

@@ -43,7 +43,7 @@ class GameStoreCon extends EventEmitter{
         let arr = [...children];
         let x = 0;
         let y = 0;
-        for (let i = 0; i < arr.length-1; i++) {
+        for (let i = 0; i < arr.length; i++) {
             if(x === this.state.boardDim.width){
                 x = 0;
                 y++;
@@ -60,7 +60,7 @@ class GameStoreCon extends EventEmitter{
     }
     saveToLocalStorage(level){
         localStorage.setItem(level, this.state.boardString);
-        this.emit("change");
+        //this.emit("change");
     }
     returnBoardState(){
         if(this.state.board.length === 0){
@@ -99,21 +99,6 @@ class GameStoreCon extends EventEmitter{
         this.emit("change");
     }
 
-    changeBoardSize(id){
-        if(id === "70x50"){
-            this.state.boardDim.width = 70;
-            this.state.boardDim.height = 50;
-        } else if("50x30"){
-            this.state.boardDim.width = 50;
-            this.state.boardDim.height = 30;
-        } else if("100x70"){
-            this.state.boardDim.width = 100;
-            this.state.boardDim.height = 70;
-        }
-        this.setupGame();
-        this.emit("changed");
-    } 
-
     mouseup(){
         this.state.mousedown = false;
         this.emit("change");
@@ -136,13 +121,11 @@ class GameStoreCon extends EventEmitter{
     loadArray(id){
         let storageItem = JSON.parse(localStorage.getItem(id));
         this.state.board = storageItem;
-        let boardWidth = storageItem.length;
-        let counter = 0; 
-        _.flatMap(storageItem, (e)=>{
-            console.log(e);
-        });
-        let boardHeight = counter/boardWidth;
-        console.log("board height", boardHeight, "boardWidth", boardWidth);
+        let boardHeight = storageItem.length;
+        let boardWi =_.flattenDeep(storageItem).length;
+        let boardWidth = boardWi/boardHeight;
+        this.state.boardDim.width = boardWidth;
+        this.state.boardHeight = boardHeight;
         this.emit("change");
     }
 
@@ -172,9 +155,9 @@ class GameStoreCon extends EventEmitter{
     }
 
     resizeBoard(size, cols, rows){
-        this.state.widthInPx = size;
-        this.state.boardDim.width = cols;
-        this.state.boardDim.height = rows;
+        this.state.widthInPx = Number.parseInt(size);
+        this.state.boardDim.width = Number.parseInt(cols);
+        this.state.boardDim.height = Number.parseInt(rows);
         this.setupGame();
         this.emit("change");
     }

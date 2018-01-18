@@ -58,7 +58,7 @@ class ArrayModal extends Component{
             </Modal.Body>
             <Modal.Footer>
                 <Button id="saveToLocalStorage" bsStyle="info" onClick={this.handleClick.bind(this)}>Save to LocalStorage</Button>
-                <Button bsStyle="danger" onClick={this.close.bind(this)}>Dissmiss</Button>
+                <Button bsStyle="danger" onClick={this.close.bind(this)}>Close</Button>
             </Modal.Footer>
           </Modal>
         );

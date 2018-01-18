@@ -6,7 +6,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 class GameControls extends Component { 
     handleClick(e){
         let id = e.target.id;
-        if(id === "wall" || id === "brick" || id === "wood" || id === "water"){
+        if(id === "wall" || id === "brick" || id === "wood" || id === "water" || id==="delete"){
             $(".material").removeClass("matActive");
             $("#"+id).addClass("matActive");
         }
@@ -32,6 +32,9 @@ class GameControls extends Component {
             case "wood":
                 actions.changeMaterial(id);
                 break;
+            case "delete":
+                actions.changeMaterial("death");
+            break;
             case "openCloseResizeModal":
                 actions.openCloseResizeModal(true);
                 break;
@@ -50,6 +53,7 @@ class GameControls extends Component {
                 <li><div className="material brick" id="brick" onClick={this.handleClick.bind(this)}></div> </li>
                 <li><div className="material water" id="water" onClick={this.handleClick.bind(this)}></div> </li>
                 <li><div className="material wood apple" id="wood" onClick={this.handleClick.bind(this)}></div> </li>
+                <li><div className="material delete" id="delete" onClick={this.handleClick.bind(this)}></div> </li>
             </ul>
 
         );

@@ -69,7 +69,7 @@ class LoadArrayModal extends Component{
                 </ul>
             </Modal.Body>
             <Modal.Footer>
-                <Button bsStyle="danger" onClick={this.close.bind(this)}>Dissmiss</Button>
+                <Button bsStyle="danger" onClick={this.close.bind(this)}>Close</Button>
             </Modal.Footer>
           </Modal>
         );
