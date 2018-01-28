@@ -14,7 +14,7 @@ class Header extends Component {
             </Navbar.Header>
             <Navbar.Collapse>
                 <ul className="nav navbar-nav">
-                    <li><a href="https://github.com/endzi007/game-of-life" target="_blank"><i className="fa fa-github fa-lg" aria-hidden="true"></i> Github repository</a></li>
+                    <li><a href="https://github.com/endzi007/div-map-maker" target="_blank"><i className="fa fa-github fa-lg" aria-hidden="true"></i> Github repository</a></li>
                     <li><a href="https://linkedin.com/in/enis-jašarović-2b9794132" target="_blank"><i className="fa fa-linkedin fa-lg" aria-hidden="true"></i> linkedIn</a></li>
                     <li><a href="https://enis-jasarovic.com" target="_blank"><i className="fa fa-user-circle-o fa-lg" aria-hidden="true"></i> My Portfolio</a></li>
                 </ul> 
