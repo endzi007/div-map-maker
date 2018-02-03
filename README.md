@@ -1,1 +1,1 @@
-The project can be found at this address: http://endzi007.github.io/div-map-maker
+The project can be found at this address: http://endzi007.github.io/div-map-maker/
